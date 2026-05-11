@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Claim Your Prize</title>
+
+<style>
+
+body{
+  font-family:Arial;
+  background:#f5f5f5;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.container{
+  background:white;
+  padding:30px;
+  border-radius:15px;
+  width:100%;
+  max-width:420px;
+}
+
+h1{
+  margin-bottom:15px;
+}
+
+p{
+  margin-bottom:20px;
+  color:#666;
+}
+
+input, select{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  background:black;
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🎉 Congratulations!</h1>
+
+  <p id="msg"></p>
+
+  <input type="text" id="name" placeholder="Full Name" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="tel" id="phone" placeholder="Phone Number" required>
+
+  <select id="emirate" required>
+    <option value="">Select Emirate</option>
+    <option>Abu Dhabi</option>
+    <option>Dubai</option>
+    <option>Sharjah</option>
+    <option>Ajman</option>
+    <option>Umm Al Quwain</option>
+    <option>Ras Al Khaimah</option>
+    <option>Fujairah</option>
+    <option>Al Ain</option>
+    <option>Al Dhaid</option>
+  </select>
+
+  <button onclick="submitData()">Submit</button>
+
+</div>
+
+<script>
+
+document.getElementById("msg").innerText =
+  localStorage.getItem("prizeMessage") || 
+  "To claim your prize, please enter your details.";
+
+function submitData(){
+
+  const data = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    emirate: document.getElementById("emirate").value,
+    code: localStorage.getItem("winnerCode")
+  };
+
+  console.log("User Data:", data);
+
+  alert("Details submitted successfully 🎉");
+
+}
+
+</script>
+
+</body>
+</html>
