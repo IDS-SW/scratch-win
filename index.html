@@ -163,7 +163,7 @@
 
             console.log("Response from n8n:", data);
 
-            if (data.status === "valid") {   localStorage.setItem("prizeMessage", data.Bot);   localStorage.setItem("winnerCode", code);    window.location.href = "https://ids-sw.github.io/2ndscratch-win/"; } else {   alert(data.Bot || "Invalid code ❌"); }
+            const result = Array.isArray(data) ? data[0] : data;  if (result.status === "valid") {    localStorage.setItem("prizeMessage", result.Bot);   localStorage.setItem("winnerCode", code);    window.location.href = "https://ids-sw.github.io/2ndscratch-win/";  } else {   alert(result.Bot || "Invalid code ❌"); } {   localStorage.setItem("prizeMessage", data.Bot);   localStorage.setItem("winnerCode", code);    window.location.href = "https://ids-sw.github.io/2ndscratch-win/"; } else {   alert(data.Bot || "Invalid code ❌"); }
 
           } catch(error) {
 
