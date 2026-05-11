@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   <title>Scratch & Win</title>
 
   <style>
-
     *{
       margin:0;
       padding:0;
@@ -75,7 +73,6 @@
       color:white;
       font-size:16px;
       cursor:pointer;
-      transition:0.3s;
     }
 
     button:hover{
@@ -87,98 +84,78 @@
       font-size:13px;
       color:#999;
     }
-
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <img 
-      src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" 
-      alt="Logo"
-      class="logo"
-    >
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="logo">
 
-    <h1>Scratch & Win 🎉</h1>
+  <h1>Scratch & Win 🎉</h1>
 
-    <p>
-      Congratulations lucky winner!<br>
-      Please enter your unique winning code below.
-    </p>
+  <p>Enter your winning code below</p>
 
-    <form id="codeForm">
+  <form id="codeForm">
 
-      <input 
-        type="text"
-        id="winningCode"
-        placeholder="Enter your winning code"
-        required
-      >
+    <input type="text" id="winningCode" placeholder="Enter code" required>
 
-      <button type="submit">
-        Submit
-      </button>
+    <button type="submit">Submit</button>
 
-    </form>
+  </form>
 
-    <div class="footer">
-      Powered by Scratch & Win Campaign
-    </div>
+  <div class="footer">Powered by Scratch & Win Campaign</div>
 
-  </div>
+</div>
 
-  <script>
+<script>
 
-    document.addEventListener("DOMContentLoaded", function () {
+document.getElementById("codeForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      document.getElementById("codeForm").addEventListener("submit", async function(e){
+  const code = document.getElementById("winningCode").value.trim();
 
-        e.preventDefault();
+  try {
 
-        const code = document.getElementById("winningCode").value;
-
-        try {
-
-          const response = await fetch(
-            "https://ahmadn8n.duckdns.org/webhook/check-code",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ code })
-            }
-          );
-
-          const data = await response.json();
-
-          console.log("Response:", data);
-
-          // ✅ نجاح الكود
-          if (data.success) {
-
-            localStorage.setItem("winnerCode", code);
-            localStorage.setItem("prizeMessage", data.message);
-
-            // 🔥 تحويل مباشر للصفحة الثانية
-            window.location.href = "https://ids-sw.github.io/2ndscratch-win/";
-
-          } else {
-            alert("Invalid code ❌");
-          }
-
-        } catch (error) {
-          console.error(error);
-          alert("Server connection error");
-        }
-
-      });
-
+    const res = await fetch("https://ahmadn8n.duckdns.org/webhook/check-code", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ code })
     });
 
-  </script>
+    const data = await res.json();
+
+    console.log("n8n response:", data);
+
+    // 🔥 مرونة قراءة الرد من n8n
+    const success =
+      data.success === true ||
+      data.success === "true" ||
+      (data.message && data.message.toLowerCase().includes("won"));
+
+    if (success) {
+
+      localStorage.setItem("winnerCode", code);
+      localStorage.setItem("prizeMessage", data.message || "");
+
+      // 🚀 redirect
+      window.location.href = "https://ids-sw.github.io/2ndscratch-win/";
+
+    } else {
+      alert(data.message || "Invalid code ❌");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Server connection error");
+  }
+
+});
+
+</script>
 
 </body>
 </html>
