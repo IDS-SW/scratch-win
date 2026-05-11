@@ -95,7 +95,6 @@
 
   <div class="container">
 
-    <!-- LOGO -->
     <img 
       src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" 
       alt="Logo"
@@ -153,9 +152,7 @@
                 headers: {
                   "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                  code: code
-                })
+                body: JSON.stringify({ code })
               }
             );
 
@@ -163,7 +160,23 @@
 
             console.log("Response from n8n:", data);
 
-            alert(JSON.stringify(data));
+            // 🧠 normalize (array أو object)
+            const result = Array.isArray(data) ? data[0] : data;
+
+            if (result.status === "valid") {
+
+              // خزّن البيانات للصفحة الثانية
+              localStorage.setItem("prizeMessage", result.Bot);
+              localStorage.setItem("winnerCode", code);
+
+              // تحويل للصفحة الثانية
+              window.location.href = "https://ids-sw.github.io/2ndscratch-win/";
+
+            } else {
+
+              alert(result.Bot || "Invalid code ❌");
+
+            }
 
           } catch(error) {
 
