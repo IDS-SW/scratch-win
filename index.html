@@ -1,187 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Scratch & Win</title>
+<title>Scratch & Win</title>
 
-  <style>
+<style>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, sans-serif;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
 
-    body{
-      background:#f5f5f5;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-      padding:20px;
-    }
+body{
+  background:#f5f5f5;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  padding:20px;
+}
 
-    .container{
-      background:white;
-      width:100%;
-      max-width:420px;
-      padding:35px 25px;
-      border-radius:18px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.08);
-      text-align:center;
-    }
+.container{
+  background:white;
+  width:100%;
+  max-width:420px;
+  padding:35px 25px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  text-align:center;
+}
 
-    .logo{
-      width:120px;
-      margin-bottom:20px;
-    }
+.logo{
+  width:120px;
+  margin-bottom:20px;
+}
 
-    h1{
-      font-size:28px;
-      margin-bottom:15px;
-      color:#222;
-    }
+h1{
+  font-size:28px;
+  margin-bottom:15px;
+  color:#222;
+}
 
-    p{
-      color:#666;
-      font-size:16px;
-      line-height:1.6;
-      margin-bottom:30px;
-    }
+p{
+  color:#666;
+  font-size:16px;
+  line-height:1.6;
+  margin-bottom:30px;
+}
 
-    input{
-      width:100%;
-      padding:16px;
-      border:1px solid #ddd;
-      border-radius:12px;
-      font-size:16px;
-      margin-bottom:18px;
-      outline:none;
-    }
+input{
+  width:100%;
+  padding:16px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+  margin-bottom:18px;
+  outline:none;
+}
 
-    input:focus{
-      border-color:#000;
-    }
+input:focus{
+  border-color:#000;
+}
 
-    button{
-      width:100%;
-      padding:16px;
-      border:none;
-      border-radius:12px;
-      background:#000;
-      color:white;
-      font-size:16px;
-      cursor:pointer;
-      transition:0.3s;
-    }
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:12px;
+  background:#000;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    button:hover{
-      opacity:0.9;
-    }
+button:hover{
+  opacity:0.9;
+}
 
-    .footer{
-      margin-top:25px;
-      font-size:13px;
-      color:#999;
-    }
+.footer{
+  margin-top:25px;
+  font-size:13px;
+  color:#999;
+}
 
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <img 
-      src="https://media.glassdoor.com/sql/4037817/al-inmaa-squarelogo-1637146641083.png" 
-      alt="Logo"
-      class="logo"
+  <img 
+    src="https://media.glassdoor.com/sql/4037817/al-inmaa-squarelogo-1637146641083.png" 
+    alt="Logo"
+    class="logo"
+  >
+
+  <h1>Scratch & Win 🎉</h1>
+
+  <p>
+    Congratulations lucky winner!<br>
+    Please enter your unique winning code below.
+  </p>
+
+  <form id="codeForm">
+
+    <input 
+      type="text"
+      id="winningCode"
+      placeholder="Enter your winning code"
+      required
     >
 
-    <h1>Scratch & Win 🎉</h1>
+    <button type="submit">Submit</button>
 
-    <p>
-      Congratulations lucky winner!<br>
-      Please enter your unique winning code below.
-    </p>
+  </form>
 
-    <form id="codeForm">
-
-      <input 
-        type="text"
-        id="winningCode"
-        placeholder="Enter your winning code"
-        required
-      >
-
-      <button type="submit">Submit</button>
-
-    </form>
-
-    <div class="footer">
-      Powered by Scratch & Win Campaign
-    </div>
-
+  <div class="footer">
+    Powered by Scratch & Win Campaign
   </div>
 
-  <script>
+</div>
 
-    const API_URL = "https://ahmadn8n.duckdns.org/webhook/check-code";
+<script>
 
-    document.getElementById("codeForm").addEventListener("submit", async (e) => {
-      e.preventDefault();a
+const API_URL = "https://inmaa.duckdns.org/webhook/check-code";
 
-      const code = document.getElementById("winningCode").value.trim();
+document.getElementById("codeForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      if (!code) return;
+  const code = document.getElementById("winningCode").value.trim();
 
-      try {
+  if (!code) return;
 
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ code })
-        });
+  try {
 
-        const data = await res.json();
-
-        console.log("RAW RESPONSE:", data);
-
-        // normalize n8n response
-        const result = Array.isArray(data)
-          ? data[0]
-          : (data?.json || data);
-
-        console.log("RESULT:", result);
-
-        if (result?.status === "valid") {
-
-          localStorage.setItem("prizeMessage", result.message);
-          localStorage.setItem("winnerCode", code);
-
-          window.location.href = "https://ids-sw.github.io/2ndscratch-win/";
-
-        } else {
-
-          alert(result?.message || "Code is not valid ❌");
-
-        }
-
-      } catch (err) {
-
-        console.error(err);
-        alert("Server connection error");
-
-      }
-
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ code })
     });
 
-  </script>
+    const data = await res.json();
+
+    console.log("RAW RESPONSE:", data);
+
+    const result = Array.isArray(data)
+      ? data[0]
+      : (data?.json || data);
+
+    console.log("RESULT:", result);
+
+    if (result?.status === "valid") {
+
+      localStorage.setItem("prizeMessage", result.message);
+      localStorage.setItem("winnerCode", code);
+
+      window.location.href = "https://ids-sw.github.io/2ndscratch-win/";
+
+    } else {
+
+      alert(result?.message || "Code is not valid ❌");
+
+    }
+
+  } catch (err) {
+
+    console.error(err);
+    alert("Server connection error");
+
+  }
+
+});
+
+</script>
 
 </body>
 </html>
