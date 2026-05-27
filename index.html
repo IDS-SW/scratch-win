@@ -7,7 +7,6 @@
 <title>Scratch & Win</title>
 
 <style>
-
 *{
   margin:0;
   padding:0;
@@ -75,7 +74,6 @@ button{
   color:white;
   font-size:16px;
   cursor:pointer;
-  transition:0.3s;
 }
 
 button:hover{
@@ -87,7 +85,6 @@ button:hover{
   font-size:13px;
   color:#999;
 }
-
 </style>
 </head>
 
@@ -97,15 +94,13 @@ button:hover{
 
   <img 
     src="https://media.glassdoor.com/sql/4037817/al-inmaa-squarelogo-1637146641083.png" 
-    alt="Logo"
     class="logo"
   >
 
   <h1>Scratch & Win 🎉</h1>
 
   <p>
-    Congratulations lucky winner!<br>
-    Please enter your unique winning code below.
+    Enter your winning code
   </p>
 
   <form id="codeForm">
@@ -113,17 +108,13 @@ button:hover{
     <input 
       type="text"
       id="winningCode"
-      placeholder="Enter your winning code"
+      placeholder="Enter code"
       required
     >
 
     <button type="submit">Submit</button>
 
   </form>
-
-  <div class="footer">
-    Powered by Scratch & Win Campaign
-  </div>
 
 </div>
 
@@ -150,24 +141,31 @@ document.getElementById("codeForm").addEventListener("submit", async (e) => {
 
     const data = await res.json();
 
-    console.log("RAW RESPONSE:", data);
-
     const result = Array.isArray(data)
       ? data[0]
-      : (data?.json || data);
+      : data;
 
     console.log("RESULT:", result);
 
-    if (result?.status === "valid") {
+    // الحالة الأساسية من n8n
+    const status = result.status;
 
-      localStorage.setItem("prizeMessage", result.message);
+    if (status === "valid") {
+
+      localStorage.setItem("prizeMessage", result.message || result.prize);
       localStorage.setItem("winnerCode", code);
 
       window.location.href = "https://ids-sw.github.io/2ndscratch-win/";
 
-    } else {
+    } 
+    else if (status === "redeemed") {
 
-      alert(result?.message || "Code is not valid ❌");
+      alert("This code already used ❌");
+
+    } 
+    else {
+
+      alert("Invalid code ❌");
 
     }
 
